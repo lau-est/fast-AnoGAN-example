@@ -37,8 +37,8 @@ def show_tensorboard(input_img, output_img, loss, epoch, tensorboard):
     diff_img   = output_img - input_img
     diff_img   = (diff_img)*(diff_img)
 
-    tensorboard.add_scalar('Training/Generator',     loss[0], epoch + 1)
-    tensorboard.add_scalar('Training/Discriminator', loss[1], epoch + 1)
+    tensorboard.add_scalar('Training/Generator',      loss[0], epoch + 1)
+    tensorboard.add_scalar('Training/Discriminator',  loss[1], epoch + 1)
     tensorboard.add_scalar('Training/Reconstruction', loss[2], epoch + 1)
     tensorboard.add_image ('Training_Results/Input',               input_img)
     tensorboard.add_image ('Training_Results/Output',             output_img)

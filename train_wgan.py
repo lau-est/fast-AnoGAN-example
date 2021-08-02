@@ -1,33 +1,24 @@
 import torch 
 import torch.nn as nn
 from torch import autograd, optim
-from torch.utils.data import DataLoader, Dataset
-import torchvision
-from torchvision.datasets import MNIST
+from torch.utils.data import DataLoader
 from torchvision import transforms
-from torchvision.utils import save_image
 from PIL import Image
 from Data_Loader import *
 from utils import*
 from Model import *
-import numpy as np
-import matplotlib.pyplot as plt
-import random
 import argparse
 from torch.utils.tensorboard import SummaryWriter
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--n_epochs',       type   = int,          default = 200,          help = 'number of epochs of training')
+parser.add_argument('--n_epochs',       type   = int,          default = 16,          help = 'number of epochs of training')
 parser.add_argument('--batch_size',     type   = int,          default = 5,            help = 'size of the batches'         )
 parser.add_argument('--valid_split',    type   = float,        default = 0.1,          help = 'Validation split'            )
 parser.add_argument('--lr',             type   = float,        default = 0.0002,       help = 'value of the learning rate'  )
-parser.add_argument('--b1',             type   = float,        default = 0.5,          help = 'value of the beta 1'         )
-parser.add_argument('--b2',             type   = float,        default = 0.999,        help = 'value of the beta 2'         )
 parser.add_argument('--latent_dim',     type   = int,          default = 100,          help = 'latent space dimension (Z)'  )
 parser.add_argument('--size',           type   = int,          default = 256,          help = 'image size'                  )
 parser.add_argument('--channels',       type   = int,          default = 1,            help = 'image channels'              )
 parser.add_argument('--n_critic',       type   = int,          default = 5,            help = 'value of n_critic'           )
-parser.add_argument('--split_rate',     type   = float,        default = 0.8,          help = 'split rate'                  )
 parser.add_argument('--lambda_gp',      type   = int,          default = 10,           help = 'lambda gp'                   )
 parser.add_argument('--n_cpu',          type   = int,          default = 1,            help = 'number of CPU threads to use during batch generation')
 parser.add_argument('--checkp_dir',     type   = str,          default = 'fit_model/', help = 'root directory to save the training checkpoints')
@@ -40,7 +31,7 @@ directory_name = opt.checkp_dir + opt.exp_name+"/"
 create_checkdirectory(directory_name)
 
 
-# GAN Definition
+# WGAN Definition
 img_shape        =  (opt.channels, opt.size, opt.size) 
 G                =  Generator(img_shape, opt.latent_dim)
 D                =  Discriminator(img_shape)
@@ -83,6 +74,7 @@ vtransforms_ =  [   transforms.Resize( [int(opt.size),int(opt.size)], Image.BICU
                     transforms.Normalize( [0.5], [0.5] )  
                 ]
 
+
 # Dataloader for the validation dataset
 dataloaderV = DataLoader(   My_Data(valid_files, transforms_= vtransforms_, mode = 'training'), 
                             batch_size = opt.batch_size, shuffle = True, num_workers = opt.n_cpu )
@@ -95,10 +87,6 @@ tensorboard_valid = SummaryWriter('runs/WGAN_validation/' + opt.exp_name)
 
 # Criterio to evaluate the performance
 criterion = nn.MSELoss()
-
-
-# Establishing an initial best score
-best_anom_score = 10000
 
 
 # Function to compute the gradient penalty for WGAN
@@ -123,6 +111,10 @@ def compute_gradient_penalty(D, real_samples, fake_samples):
     gradient_penalty =  ((gradients.norm(2, dim=1) - 1) ** 2).mean()
 
     return gradient_penalty
+
+
+# Establishing an initial best score
+best_anom_score = 10000
 
 
 # Obtaining the epoch number to print
