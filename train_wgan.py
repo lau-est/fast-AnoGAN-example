@@ -222,7 +222,7 @@ for epoch in range(opt.n_epochs):
             fake_validity = D(fake_imgs_v.detach())
 
             # Adversarial loss
-            d_loss_v      = (-torch.mean(real_validity) + torch.mean(fake_validity) )#+ opt.lambda_gp * gradient_penalty)
+            d_loss_v      = (-torch.mean(real_validity) + torch.mean(fake_validity) )
 
             fake_imgs_v   = G(z)
             fake_validity = D(fake_imgs_v)
