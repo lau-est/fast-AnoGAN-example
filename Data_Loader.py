@@ -4,7 +4,7 @@ from PIL import Image, ImageOps
 import glob
 import os
 
-class Images_Dataset(Dataset):
+class My_Data(Dataset):
     def __init__(self, root, transforms_ = None, mode = 'training'):
         self.transform = transforms.Compose(transforms_)
         
