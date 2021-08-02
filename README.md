@@ -40,7 +40,7 @@ Use the setup.py file to install all the requirements into the mypy virtual envi
 
 
 ## Data Structure
-The dataset directory must be located into the main folder **generative-cnns**. It is organized as follow:
+The dataset directory must be located into the main folder **data**. It contains the training and testing dataset images, and it is organized as follow:
 
         data
             ├──   training/
@@ -58,6 +58,7 @@ The dataset directory must be located into the main folder **generative-cnns**. 
             |     ├── ***_***.png
             └── 
 
+Please, note that images should have a 256 x 256 dimension.
 
 ## F-AnoGAN Training
 
