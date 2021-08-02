@@ -32,9 +32,10 @@ Let's activate the mypy environment by using the workon command.
         $ workon mypy
 
 
-### Install requirements from setup.py
+### Install requirements from setup.py 
 
-Use the setup.py file to install all the requirements into the mypy virtual environment.
+You can use the setup.py file to install all the requirements into the mypy virtual environment. 
+This step is optional!
 
         $ python setup.py install
 

@@ -13,9 +13,7 @@ class My_Data(Dataset):
 
         else:
             self.files     = sorted(glob.glob(os.path.join(root, '%s' % mode) + '/*.*'))
-        
-        #print("************")
-        #print((self.files))
+
 
     def imread(self, path):
         img  = Image.open(path)
