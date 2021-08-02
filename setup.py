@@ -25,7 +25,7 @@ INSTALL_REQUIREMENTS = ['numpy>=1.18.1,<1.19',
 setup(
     name                ='f-AnoGAN',
     version             ='1.0',
-    description         ='Simple f-AnoGAN implementations for anomaly detection',
+    description         ='Simple f-AnoGAN implementation for anomaly detection',
     #author_email        ='laura.estacio@1000shapes.com',
     
     install_requires    = INSTALL_REQUIREMENTS,
