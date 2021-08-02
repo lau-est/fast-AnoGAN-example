@@ -79,7 +79,7 @@ Therefore, you must train the WGAN firstly, and the the encoder part.
 
 ### Training the encoder component
 
-        $ python train_encoder.py  --exp_name exp1 --n_epochs 500 --latent_dim 100 --batch_size 4 --data_root data/
+        $ python train_encoder.py  --exp_name exp1 --n_epochs 200 --latent_dim 100 --batch_size 4 --data_root data/
 
 
 Once executing the WGAN or Encoder components training, it creates two directories automatically: **fit_model** and **runs**. The first one stores the fitted models, and the second one stores the files for tensorboard visualization. 
