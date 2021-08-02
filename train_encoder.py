@@ -149,7 +149,7 @@ for epoch in range(opt.n_epochs):
 
             # Save checkpoints
             if epoch % 10 == 0:
-                torch.save(E.state_dict(), os.path.join(directory_name, 'encoder.asu'))
+                torch.save(E.state_dict(), os.path.join(directory_name, 'encoder.pth'))
            
             print(f"[Epoch {epoch:{padding_epoch_t}}/{opt.n_epochs}] "
                     f"[Batch {i:{padding_t}}/{len(dataloader)}] "
@@ -177,7 +177,7 @@ for epoch in range(opt.n_epochs):
             # izif architecture
             loss_imgs      = criterion(fake_imgs_v, real_imgs_v)
             loss_features  = criterion(fake_features_v, real_features_v)
-            e_loss_v         = loss_imgs + kappa * loss_features
+            e_loss_v       = loss_imgs + kappa * loss_features
 
 
             if i % opt.n_critic == 0:
@@ -186,12 +186,8 @@ for epoch in range(opt.n_epochs):
                 show_tensorboard_enc_val(real_imgs_v[0], fake_imgs_v[0], [e_loss_v.item()], epoch, tensorboard)
 
                 # Save checkpoints
-                if epoch % 10 == 0:
-                    torch.save(E.state_dict(), os.path.join(directory_name, 'encoder.asu'))
-
-                # Save checkpoints
                 if e_loss_v.item() < best_anom_score:
-                    torch.save(E.state_dict(), os.path.join(directory_name, 'encoder_best.asu'))
+                    torch.save(E.state_dict(), os.path.join(directory_name, 'encoder_best.pth'))
                     best_anom_score = e_loss_v.item()
 
                     print("Save model with less error: ", best_anom_score, "--- epoch: ", (epoch+1))
